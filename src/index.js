@@ -1,5 +1,5 @@
 /* global Headers, Request, fetch */
-import 'whatwg-fetch'
+// import 'whatwg-fetch'
 import pathToRegexp from 'path-to-regexp'
 import _path from 'path'
 import compose from 'babel-loader!koa-compose'
@@ -85,13 +85,17 @@ methods.forEach(method => {
 
 Rest.fetch = null
 Rest.config = {
-  root: '',
+  root: null,
   HTTPmethodOverride: false,
   emulateJSON: false
 }
 
 function query (ctx, next) {
-  const request = new Request(ctx.request.url, {
+  let url = ctx.request.url
+  if (Rest.config.root) {
+    url = Rest.config.root.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url)
+  }
+  const request = new Request(url, {
     ...ctx.request
   })
   console.log(request)
@@ -142,6 +146,7 @@ export class Action {
         method: this.method,
         ...options
       }
+
       ctx.headers = request.headers
       ctx.request = request
 

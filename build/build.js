@@ -17,5 +17,10 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
+  },
+  node: {
+    console: false,
+    process: false,
+    Buffer: false
   }
 }

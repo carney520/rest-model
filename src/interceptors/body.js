@@ -16,6 +16,6 @@ export default function (ctx, next) {
       ctx.request.body = JSON.stringify(body)
       ctx.request.headers.set('Content-Type', 'application/json')
     }
-    return next()
   }
+  return next()
 }

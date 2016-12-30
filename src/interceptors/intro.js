@@ -4,7 +4,8 @@
 export default function (ctx, next) {
   return next().then(() => {
     const response = ctx.response
-    if (response.ok) {
+    if (!response) return null
+    if (response && response.ok) {
       return response
     } else {
       let error = new Error(response.statusText)
