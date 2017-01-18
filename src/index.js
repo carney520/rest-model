@@ -1,8 +1,8 @@
 /* global Headers, Request, fetch */
 // import 'whatwg-fetch'
 import pathToRegexp from 'path-to-regexp'
-import _path from 'path'
-import compose from 'babel-loader!koa-compose'
+import {join} from './utils.js'
+import compose from './compose.js'
 
 // hooks
 import intro from './interceptors/intro.js'
@@ -57,7 +57,7 @@ export default class Rest {
   // 生成可调用的对象
   model (prefix, hooks) {
     let obj = {}
-    prefix = prefix ? _path.join(prefix, this.prefix) : this.prefix
+    prefix = prefix ? join(prefix, this.prefix) : this.prefix
     hooks = hooks ? hooks.concat(this.hooks) : this.hooks
 
     this.actions.forEach(action => {
@@ -98,7 +98,6 @@ function query (ctx, next) {
   const request = new Request(url, {
     ...ctx.request
   })
-  console.log(request)
   return fetch(request)
   .then((res) => {
     ctx.response = res
@@ -126,9 +125,8 @@ export class Action {
     this.options = options
   }
   getDispatch (prefix, hooks) {
-    const path = _path.join(prefix, this.path)
+    const path = join(prefix, this.path)
     const toPath = pathToRegexp.compile(path)
-    console.log(path, hooks)
     hooks = builtinHooks.concat(hooks || [])
     // 负责最后的请求
     hooks.push(query)
