@@ -1,6 +1,6 @@
 {
   "name": "rest-model",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/rest-model.js",
   "description": "An elegant REST client for Javascript",
   "homepage": "https://github.com/carney520/rest-model",
@@ -37,5 +37,8 @@
   "dependencies": {
     "path-to-regexp": "^1.7.0",
     "query-string": "^4.2.3"
+  },
+  "peerDependencies": {
+    "whatwg-fetch": "^2.0.3"
   }
 }
